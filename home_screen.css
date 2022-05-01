@@ -1,0 +1,210 @@
+   body, html {
+        overflow: hidden; /* Hide scrollbars */
+        padding: 0; 
+        margin: 0;
+        /* cursor: url(https://cur.cursors-4u.net/cursors/cur-11/cur1036.cur),  */
+      /* auto !important; */
+    }
+    #opening {
+      position: absolute;
+      font-size: 60px;
+    font-family: cursive;
+    color: white;
+    -webkit-text-stroke: 1px black;
+    
+    /* disables highlighting of text */
+    user-select: none;
+    -webkit-user-select: none; /*Safari*/
+    -moz-user-select: none; /*Firefox*/
+    }
+
+    #border {
+        border-radius: 25px;     
+        background-color: #8659ad;
+        padding: 0px;
+        width:300px;
+        height: 160px;
+        position: fixed;
+    }
+    #border:hover{        
+        background-color: #b98fdd;
+        transform: scale(1.02);
+    }
+
+    #wrapper{
+        position: absolute;
+    }
+    #map{
+        position: absolute;
+        width: 100%;
+        height: 100%;  
+    }
+
+    #dialogue{
+      position: absolute;
+      top:450px; 
+      left:50px;
+      font-size: 30px;
+      font-family: cursive;
+      color: white;
+      -webkit-text-stroke: 1px black;
+      z-index: 30;
+    }
+
+    .bldgs {
+        position: absolute;
+      }
+      
+      .bldgs:hover {
+        width: .05px;
+        height: .05px;
+        box-shadow: 100px 50px 100px 90px rgb(255, 255, 255);
+        transform: scale(1.02);
+      }
+
+      #asra {
+        position:absolute; 
+        top:160px;
+        left:60px;
+        z-index: 0;
+      }
+
+      #characterSprite {
+        position:absolute; 
+        top:5px;
+        left: 575px;
+        z-index: 0;
+      }
+
+      #textbox {
+        position: absolute;
+        z-index: 1;
+        top:430px; 
+        left:20px;
+      }
+
+      
+      #pauseText{
+        position: absolute;
+        z-index: 2;
+        /* disables highlighting of text */
+        user-select: none;
+        -webkit-user-select: none; /*Safari*/
+        -moz-user-select: none; /*Firefox*/
+      }
+      
+      #pause{
+          opacity: 90%;
+          -webkit-text-stroke: 1px black;
+          color:white;  
+          font-family: cursive;
+          font-weight: 900;
+          text-decoration: none;
+          position: absolute;
+          z-index: 300;
+
+          /* disables highlighting of text */
+        user-select: none;
+        -webkit-user-select: none; /*Safari*/
+        -moz-user-select: none; /*Firefox*/
+      }
+
+      .music{
+        width: .5px;
+        height: .5px;
+        position: absolute; 
+        top: 10px; 
+         
+      }
+      .music:hover{
+        box-shadow: 15px 25px 40px 40px  rgb(255, 255, 255);
+        transform: scale(1.2);
+      }
+
+      #skip{
+      position: absolute; 
+      top:325px; 
+      left:900px;
+
+      /* disables highlighting of text */
+      user-select: none;
+      -webkit-user-select: none; /*Safari*/
+      -moz-user-select: none; /*Firefox*/
+      }
+
+
+      #skip:hover{
+        width: 21px;
+        height: .05px;
+        box-shadow: 25px 10px 20px 10px  rgb(255, 255, 255);
+        transform: scale(1.05);
+      }
+
+
+      #skipGame{
+        position: absolute; 
+        top:50px; 
+        left:20px;
+  
+        /* disables highlighting of text */
+        user-select: none;
+        -webkit-user-select: none; /*Safari*/
+        -moz-user-select: none; /*Firefox*/
+        z-index: 500;
+        }
+  
+        
+        #skipGame:hover{
+          width: 21px;
+          height: .05px;
+          box-shadow: 25px 10px 20px 10px  rgb(255, 255, 255);
+          transform: scale(1.05);
+        }
+
+     
+    a:hover{
+    text-decoration: none;
+    text-shadow: 0 0 10px #ff00bf;
+    -webkit-text-stroke: 1px #ff00bf;
+    font-size: 20px;
+    font-family: cursive;
+    
+
+      /* disables highlighting of text */
+      user-select: none;
+      -webkit-user-select: none; /*Safari*/
+      -moz-user-select: none; /*Firefox*/
+    }
+
+    a:active, :visited, :link{
+    text-decoration: none;
+    color: white;
+   -webkit-text-stroke: 1px black;
+   font-size: 20px;
+   font-family: cursive;
+
+   /* disables highlighting of text */
+   user-select: none;
+   -webkit-user-select: none; /*Safari*/
+   -moz-user-select: none; /*Firefox*/
+   } 
+
+
+   /* .custom { */
+    /* The second value here is a fallback. */
+    /* cursor: url(images/my-cursor.png), auto; */
+  
+    /* You may need coordinates to adjust the pointer
+       for example, the custom cursor is circular and you want
+       the middle to be where you click */
+    /* cursor: url(target.svg) 15 15, move; */
+  /* } */
+
+  #noNeed{
+    position: absolute;
+  }
+
+  #goHomeDialogue{
+    position: absolute;
+    
+  }

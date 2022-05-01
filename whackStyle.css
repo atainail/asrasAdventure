@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+html {
+	
+box-sizing: border-box;
+font-size: 10px;
+background-color: #f3e6e8;
+background-image: linear-gradient(315deg, #f3e6e8 0%, #c5e1a5 74%);
+z-index: 1;
+
+}
+
+body {
+padding: 0;
+margin: 0;
+font-family: 'Shadows Into Light', cursive;
+width: 1000px;
+height: 600px;
+cursor: url('mallet_up.png'), auto;
+/* https://www.bing.com/images/search?view=detailV2&ccid=fymo1L9A&id=D4B439AB0374CAEA3227927B2904C7FB62A29C3A&thid=OIP.fymo1L9AqvC8AdcYfZq_7QHaJi&mediaurl=https%3a%2f%2fmedia.istockphoto.com%2fvectors%2fcartoon-mallet-vector-id470869416%3fk%3d6%26m%3d470869416%26s%3d612x612%26w%3d0%26h%3dG1P81NYU8Srnm0I4TGDmgWx2daCPOQFYAalspF6jA_A%3d&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.7f29a8d4bf40aaf0bc01d7187d9abfed%3frik%3dOpyiYvvHBCl7kg%26pid%3dImgRaw%26r%3d0&exph=612&expw=475&q=cartoon+mallet+&simid=608048613556298058&FORM=IRPRST&ck=E08F47ACEA7F38A9A12076A8948D1FD5&selectedIndex=1&ajaxhist=0&ajaxserp=0 */
+overflow: hidden; /* Hide scrollbars */
+
+
+
+/* disables highlighting of text */
+user-select: none;
+-webkit-user-select: none; /*Safari*/
+-moz-user-select: none; /*Firefox*/
+z-index: 1;
+
+
+}
+
+body:active{
+    cursor: url('mallet_down.png'), auto;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+    }
+
+.start{
+text-align: center;
+ 
+}
+
+h1 {
+text-align: center;
+font-size: 4rem;
+margin-bottom: 0;
+}
+
+.score {
+color: rgb(104, 94, 114);
+margin-top: 0%;
+}
+
+.game {
+width: 800px;
+height: 400px;
+display: flex;
+flex-wrap: wrap;
+margin: 0 auto;
+}
+
+.hole {
+flex: 1 0 33.33%;
+overflow: hidden;
+position: relative;
+}
+
+.hole:after {
+display: block;
+background: url(dirt.png) bottom center no-repeat;
+background-size: contain;
+content: " ";
+width: 100%;
+height:70px;
+position: absolute;
+bottom: -30px;
+}
+
+.mole {
+background: url('mole.png') bottom center no-repeat;
+background-size: 50%;
+position: absolute;
+top: 100%;
+width: 100%;
+height: 100%;
+transition:all 0.4s ease;
+
+}
+
+
+
+.hole.up .mole {
+top: 0;
+}
+
+button{
+background: rgba(190, 19, 19, 0.2);
+border: red;
+font-size: 4rem;
+
+}
+
+.hole.up .mole {
+top: 0;
+}
+
+.music{
+    width: .5px;
+    height: .5px;
+    position: absolute; 
+    top: 10px; 
+     
+  }
+  .music:hover{
+    box-shadow: 15px 25px 40px 40px  rgb(255, 255, 255);
+    transform: scale(1.2);
+  }
+ 

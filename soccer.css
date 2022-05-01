@@ -1,0 +1,44 @@
+html{
+	background-color:#dae5ff;
+	
+}
+
+body{
+	font-family: cursive;
+	overflow: hidden; /* Hide scrollbars */
+	margin: 0;
+	padding: 0; 
+}
+
+
+.music{
+	width: .5px;
+	height: .5px;
+	position: absolute; 
+	top: 50px; 
+	 
+  }
+  .music:hover{
+	box-shadow: 15px 25px 40px 40px  rgb(255, 255, 255);
+	transform: scale(1.2);
+  }
+
+  #skipGame{
+	position: absolute; 
+	top:70px; 
+	left:20px;
+
+	/* disables highlighting of text */
+	user-select: none;
+	-webkit-user-select: none; /*Safari*/
+	-moz-user-select: none; /*Firefox*/
+	z-index: 500;
+	}
+
+	
+	#skipGame:hover{
+	  width: 21px;
+	  height: .05px;
+	  box-shadow: 25px 10px 20px 10px  rgb(255, 255, 255);
+	  transform: scale(1.05);
+	}

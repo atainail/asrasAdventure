@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asra's Adventure</title>
+    <link rel="stylesheet" href="default.css">
+     
+</head>
+
+<body onload="startMusic.play(); ">
+
+    <center>
+        
+      
+         <!-- whack-a-mole  start -->
+        
+         <div id="whack"></div>
+
+         <!-- whack end -->
+        
+        <!-- House Scene Start -->
+        <div id ="house1"></div>
+        <!-- House Scene End -->
+    
+        <!-- House 2 Scene Start -->
+        <div id ="house2"></div>
+        <!-- House 2 Scene End -->
+    
+          <!-- House 3 Scene Start -->
+          <div id ="house3"></div>
+          <!-- House 3 Scene End -->
+    
+        <div id ="houseGame"></div>
+    
+    
+        <!-- Burger Scene 1 Start -->
+        <div id ="burgerScene1"></div>
+        <!-- Burger Scene End -->
+    
+    
+        <!-- Burger Scene 2 Start -->
+        <div id ="burgerScene2"></div>
+        <!-- Burger Scene End -->
+    
+        <!-- burger game instructions start -->
+        <div id ="burgerScene3"></div>
+        <!-- burger game instructions end -->
+    
+    
+        <!-- burger game Start -->
+        <div id ="burgerGame"></div>
+        <!-- burger game End -->
+    
+        <!-- Bakery Scene Start -->
+        <div id ="bakery1"></div>
+        <!-- Bakery Scene End -->
+    
+        <!-- Bakery Scene Start -->
+        <div id ="bakery2"></div>
+        <!-- Bakery Scene End -->
+    
+        <!-- Bakery Scene Start -->
+        <div id ="bakery3"></div>
+        <!-- Bakery Scene End -->
+    
+        <!-- bakery game  start -->
+        <div id="bakeryGame"></div>
+        <!-- bakery game end-->
+    
+    
+       
+    
+          <!-- Carn Scene Start -->
+          <div id ="carn1"></div>
+          <!-- Carn Scene End -->
+    
+          <!-- Carn Scene Start -->
+          <div id ="carn2"></div>
+          <!-- Carn Scene End -->
+    
+          <!-- Carn Scene Start -->
+          <div id ="carn3"></div>
+          <!-- Carn Scene End -->
+          <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    
+    
+         <!-- Play Scene Start -->
+         <div id ="play1"></div>
+         <!-- Play Scene End -->
+     
+         <!-- Play 2 Scene Start -->
+         <div id ="play2"></div>
+         <!-- Play 2 Scene End -->
+     
+           <!-- Play 3 Scene Start -->
+           <div id ="play3"></div>
+           <!-- Play 3 Scene End -->
+    
+    
+           <!-- Play 3 Scene Start -->
+           <div id ="playGame"></div>
+           <!-- Play 3 Scene End -->
+           <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    
+    
+        <!--Map Page Start -->
+        <div id ="map"> </div>
+        <!--Map Page End -->
+    
+      
+    
+        <!-- Start Page start -->
+        <div id ="opening"></div>
+        <!--Start Page End -->
+    
+    
+        <div id = "noNeed"></div>
+        <div id ="goHomeDialogue"></div>
+        
+       
+    
+    
+        <!-- textBox start -->
+        <div id ="textBox"></div>
+        <!-- textBox end -->
+    
+    
+    
+        <!-- dialogue start -->
+        <div id="dialogue"> </div>
+        <!--dialogue end -->
+    
+        <!-- asra start -->
+        <div id ="asra"></div>
+        <!-- asra end -->
+    
+    
+        <!-- characters start -->
+        <div id ="characterSprite"></div>
+        <!-- characters end -->
+    
+    
+    
+        <!-- characters start -->
+        <div id ="gameComplete"></div>
+        <!-- characters end -->
+    
+    
+    
+        <!-- pause menu start -->
+        <div id="pause"> </div>
+        <!-- pause menu end -->
+    
+    </center>
+
+    </body> 
+
+
+
+
+
+
+<script>
+    //background from https://www.pinterest.fr/pin/814588651337697894/
+    var startMusic = new Audio("start_music.mp3");
+    var mapMusic = new Audio("map.mp3");
+    var sceneMusic = new Audio("story_music.mp3");
+    var bakeryMusic = new Audio("bakery_game.m4a");
+    var playMusic = new Audio("play_game.m4a");
+    var burgerMusic = new Audio("burger_game.mp3");
+    var carnMusic = new Audio("carn_game.m4a");
+    var endingMusic = new Audio("endingMusic.m4a");
+    var houseMusic = new Audio("house_game.m4a");
+    var pergatoryMusic = new Audio("pergatory_music.mp3");
+    var winMusic = new Audio("game_win.mp3");
+    var textSound = new Audio("text_sound.mp3");
+
+    startMusic.loop = true;
+    mapMusic.loop = true;
+    sceneMusic.loop = true;
+    bakeryMusic.loop = true;
+    playMusic.loop = true;
+    burgerMusic.loop = true;
+    carnMusic.loop = true;
+    endingMusic.loop = true;
+    houseMusic.loop = true;
+    pergatoryMusic.loop = true;
+
+    //keeps track of how many games are completed
+    var gamesCompleted = 0;
+
+    function drawGameComplete(){
+        restartDialogue();
+    if(gamesCompleted == 5){
+        clearId('bakery1'); clearId('bakery2'); clearId('bakery3');
+        clearId('burgerScene1'); clearId('burgerScene2'); clearId('burgerScene3');
+        clearId('carn1'); clearId('carn2'); clearId('carn3');
+        clearId('house1'); clearId('house2'); clearId('house3');
+        clearId('play1'); clearId('play2'); clearId('play3');
+        clearId('map'); stopMusic(mapMusic); 
+        clearId('pause'); clearId('dialogue');
+        writeToId('gameComplete', 
+         '<link rel="stylesheet" href="home_screen.css">'
+        + '<div onclick="gameOverDialogue(gameDone, gameComplete)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
+        + '<div id="scene">'
+        + '<img src ="game_over.png" style="height:100%" onload="endingMusic.play(); gameOverDialogue(gameDone, gameComplete)">'
+        + '</div>'
+        );
+    }
+}
+
+    var bakeryVisited = 0;
+    var burgerVisited = 0;
+    var carnVisited = 0;
+    var houseVisited = 0;
+    var playVisited = 0;
+
+    
+    function stopMusic(song){
+        song.pause();
+        song.currentTime = 0;
+    }
+    
+
+    function clearId(ID){
+        document.getElementById(ID).innerHTML = "";
+    }
+ 
+
+    function writeToId(ID, text){
+        document.getElementById(ID).innerHTML = text;
+    }
+    </script>
+
+
+    <script>
+    //Start Page Start///////////////////////////////////////
+    writeToId("opening",
+    '<link rel="stylesheet" href="home_screen.css">'
+
+    + '<img src="bg.gif" style="position:absolute; left:0; width: "><img src="wave.gif" style="position:absolute; left:0;">'
+        + '<div id ="border" style="font-family: cursive; top:50%; left:60%; margin-top: -50px;margin-left: -100px;" onclick="drawMap(); clearId(&apos;opening&apos;); stopMusic(startMusic); mapMusic.play();">START <br> GAME</div> '
+        + "<p style='position:absolute; top:0px; width:500px;'> Asra's Adventure <br> </p>" 
+        + "<p style='position:absolute; top:100px; width: 300px; left:460px;font-size:30px;'> Saving Cannoli </p>");
+    /////////////////////////////////////////////////////////
+    </script>
+
+
+
+    <script>
+    //Map Page Start////////////////////////////////////////
+
+    //  &apos; transaltes to ' (single quotation) in HTML
+    function drawMap(){
+        writeToId("map",
+     
+        '<link rel="stylesheet" href="home_screen.css">'
+        + '<img src ="naked_map.png">' 
+     
+        
+      + '<!--start placing the images on the webpage-->' 
+        + '<div class ="bldgs" style="top: 155px; left: 145px;" onclick="whichBakeryScene(); clearId(&apos;map&apos;); stopMusic(mapMusic); stopMusic(startMusic);"><a href="#" ><img src ="bakery.png"></a></div>' 
+        + '<div class ="bldgs" style="top: 415px; left: 625px;" onclick="whichBurgerScene(); clearId(&apos;map&apos;); stopMusic(mapMusic); stopMusic(startMusic);"><a href="#" ><img src ="burger_map.png"></a></div> ' 
+        + '<div class ="bldgs" style="top: 160px; left: 650px;" onclick="whichCarnScene();   clearId(&apos;map&apos;); stopMusic(mapMusic); stopMusic(startMusic);"><a href="#" ><img src ="carn.png"></a></div>'         
+        + '<div class ="bldgs" style="top: 410px; left: 120px;" onclick="whichHouseScene();  clearId(&apos;map&apos;); stopMusic(mapMusic); stopMusic(startMusic); sceneMusic.play()"><a href="#" ><img src ="house.png"></a></div>'  
+        + '<div class ="bldgs" style="top: 300px; left: 370px;" onclick="whichPlayScene();   clearId(&apos;map&apos;); stopMusic(mapMusic);"><a href="#" ><img src ="play.png"></a></div>' 
+         
+    
+        + '<!--puts the play/pause music icons in the top right of the screen-->' 
+        + '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="mapMusic.play();"></div>' 
+        + '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="mapMusic.pause();"></div>'  );
+        }
+    ///Map Page End///////////////////////////////////////////////////
+
+
+function drawGoHome(){
+     if(houseVisited == 0){
+         writeToId("goHomeDialogue",
+         '<link rel="stylesheet" href="home_screen.css">'
+
+        + '<div class ="bldgs" style="top: 155px; left: 145px;"><img src ="bakery.png"></div>' 
+        + '<div class ="bldgs" style="top: 415px; left: 625px;"><img src ="burger_map.png"></div> ' 
+        + '<div class ="bldgs" style="top: 160px; left: 650px;"><img src ="carn.png"></div>'         
+        + '<div class ="bldgs" style="top: 410px; left: 120px;"><img src ="house.png"></div>'  
+        + '<div class ="bldgs" style="top: 300px; left: 370px;"><img src ="play.png"></div>' 
+        + '<div onclick="pergatoryDialogue(goHomeDialogue, &apos;goHomeDialogue&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
+        + '<div id="scene">'
+        +    '<img src ="naked_map.png" style="height:100%;" onload="pergatoryMusic.play(); pergatoryDialogue(goHomeDialogue, &apos;goHomeDialogue&apos;)">'
+        +'</div>'
+         );
+     }
+ }
+
+ function dontPlay(){
+        writeToId("noNeed",
+        '<link rel="stylesheet" href="home_screen.css">'
+
+        + '<div class ="bldgs" style="top: 155px; left: 145px;"><img src ="bakery.png"></div>' 
+        + '<div class ="bldgs" style="top: 415px; left: 625px;"><img src ="burger_map.png"></div> ' 
+        + '<div class ="bldgs" style="top: 160px; left: 650px;"><img src ="carn.png"></div>'         
+        + '<div class ="bldgs" style="top: 410px; left: 120px;"><img src ="house.png"></div>'  
+        + '<div class ="bldgs" style="top: 300px; left: 370px;"><img src ="play.png"></div>'
+        + '<div onclick="pergatoryDialogue(noNeedDialogue, &apos;noNeed&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
+        + '<div id="scene">'
+        +    '<img src ="naked_map.png" style="height:100%;" onload="pergatoryMusic.play(); pergatoryDialogue(noNeedDialogue, &apos;noNeed&apos;);">'
+        +'</div>'
+         );
+ }
+
+
+
+
+
+
+    //Bakery Scene 1 Start//////////////////////////////////////////////////
+    function drawBakery1(){
+
+        
+writeToId("bakery1",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(runDialog(bakeryDialogue, &apos;bakery1&apos;, drawBakeryGame, &apos;bebe.png&apos;), 3000)" onclick="clearId(&apos;bakery1&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawBakeryGame(); restartDialogue();"></div>'
++ '<div onclick="runDialog(bakeryDialogue, &apos;bakery1&apos;, drawBakeryGame, &apos;bebe.png&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="bakery_scene.png" style="height:100%;" onload="sceneMusic.play();">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+    //Bakery Scene 1 End//////////////////////////////////////////////////////
+
+
+    //Bakery Scene 2 Start//////////////////////////////////////////////////
+function drawBakery2(){
+
+writeToId("bakery2",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(runDialog2(bakeryDialogue2, &apos;bakery2&apos;, &apos;bebe.png&apos;), 3000)" onclick="clearId(&apos;bakery2&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawMap(); restartDialogue(); mapMusic.play()"></div>'
++ '<div onclick="runDialog2(bakeryDialogue2, &apos;bakery2&apos;, &apos;bebe.png&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="bakery_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+//Bakery Scene 2 End//////////////////////////////////////////////////////
+
+
+    //Bakery Scene 3 Visited Start//////////////////////////////////////////////////
+function drawBakery3(){
+
+writeToId("bakery3",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(visitedDialogue(alreadyVisited, &apos;bakery3&apos;), 3000)" onclick="clearId(&apos;bakery3&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawMap(); mapMusic.play(); restartDialogue();"></div>'
++ '<div onclick="visitedDialogue(alreadyVisited, &apos;bakery3&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="bakery_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+//Bakery Scene Visited End//////////////////////////////////////////////////////
+
+
+    
+    function whichBakeryScene(){
+        if(bakeryVisited == 0){
+            drawBakery1();
+        } else {
+            drawBakery3();
+        }
+    } 
+    
+    function whichBakeryScene(){
+     if(houseVisited == 0){
+        drawGoHome(); 
+     } 
+     else if (houseVisited == 1 && bakeryVisited == 0){
+     drawBakery1();    
+     }else {
+        drawBakery3();
+     }
+ }   
+
+
+
+
+
+    /////Start Bakery Game///////////////////////////////////////////////
+
+    var bakeryScript   = document.createElement("script");
+    bakeryScript.type  = "text/javascript";
+    bakeryScript.src   = "bakery.js";
+
+     
+function drawBakeryGame(){
+    writeToId("bakeryGame",
+    '<div id="pause"></div>' 
+
+    + '<link href="bakery.css" rel="stylesheet">'
+  
+    +  '<div id="skipGame"><img src="skip.gif" onclick="clearId(&apos;bakeryGame&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); sceneMusic.play(); stopMusic(bakeryMusic); drawBakery2(); restartDialogue(); bakeryVisited++; gamesCompleted++"></div>'
+    + '<h1 class="page-title">Bebe&apos;s Bakery</h1>'
+    + '<h2 class="instructions"> Instructions: Help Bebe organize the inventory by matching all 8 treats </h2>'
+    + '<div class="overlay-text visible">'
+    +   'Click to Start Timer'
+    +  '</div>'
+    + '<div id="game-over-text" class="overlay-text">'
+    +    'GAME OVER'
+    +   '<span class="overlay-text-small">Click to Restart</span>'
+    +  '</div>'
+    + '<div id="victory-text" class="overlay-text">'
+    + 'VICTORY'
+    + '<span class="overlay-text-small">Loading...</span>'
+    + '</div>'
+    +  '<div class="game-container">'
+    +   '<div class="game-info-container">'
+    +   '<div class="game-info">'
+    +        'Time <span id="time-remaining">100</span>'
+    +     '</div>'
+    +     '<div class="game-info">'
+    +      ' Flips <span id="flips">0</span>'
+    +     '</div>'
+    +   '</div>'
+    +  '<div class="card">'
+    +    '<div class="card-back card-face">'
+    +     ' <img src="back.png" onload="bakeryMusic.play()">'
+    +   ' </div>'
+    +    '<div class="card-front card-face">'
+    +        '<img class="card-value" src="bread.png onload="bakeryMusic.play()"">'
+    +  '</div>'
+    +  '</div>'
+    +   '<div class="card">'
+    +     '<div class="card-back card-face">'
+    +       '<img src="back.png">'
+    +     '</div>'
+    +     '<div class="card-front card-face">'
+    +       '<img class="card-value" src="bread.png">'
+    +     '</div>'
+    +   '</div>'
+    +   '<div class="card">'
+    +     '<div class="card-back card-face">'
+    +       '<img src="back.png">'
+    +      '</div>'
+    +    '<div class="card-front card-face">'
+    +      '<img class="card-value" src="cake.png">'
+    +   '</div>'
+    +  '</div>'
+    +  '<div class="card">'
+    +    '<div class="card-back card-face">'
+    +      '<img src="back.png">'
+    +    '</div>'
+    +   '<div class="card-front card-face">'
+    +     '<img class="card-value" src="cake.png">'
+    +   '</div>'
+    +  '</div>'
+    +  '<div class="card">'
+    +   '<div class="card-back card-face">'
+    +     '<img src="back.png">'
+    +    '</div>'
+    +   '<div class="card-front card-face">'
+    +      '<img class="card-value" src="cookie.png">'
+    +    '</div>'
+    +   '</div>'
+    +  '<div class="card">'
+    +    '<div class="card-back card-face">'
+    +     '<img src="back.png">'
+    +   '</div>'
+    +   '<div class="card-front card-face">'
+    +    '<img class="card-value" src="cookie.png">'
+    +  '</div>'
+    +'</div>'
+    + '<div class="card">'
+    +   '<div class="card-back card-face">'
+    +     '<img src="back.png">'
+    +   '</div>'
+    +   '<div class="card-front card-face">'
+    +    '<img class="card-value" src="crescant.png">'
+    +   '</div>'
+    + '</div>'
+    + '<div class="card">'
+    +    '<div class="card-back card-face">'
+    +      '<img src="back.png">'
+    +    '</div>'
+    +    '<div class="card-front card-face">'
+    +      '<img class="card-value" src="crescant.png">'
+    +    '</div>'
+    +  '</div>'
+    +   '<div class="card">'
+    +     '<div class="card-back card-face">'
+    +       '<img src="back.png">'
+    +    '</div>'
+    +   ' <div class="card-front card-face">'
+    +      '<img class="card-value" src="cupcake.png">'
+    +    '</div>'
+    +   '</div>'
+    +   '<div class="card">'
+    +     '<div class="card-back card-face">'
+    +       '<img src="back.png">'
+    +     '</div>'
+    +    '<div class="card-front card-face">'
+    +      '<img class="card-value" src="cupcake.png">'
+    +    '</div>'
+    +   '</div>'
+    +   '<div class="card">'
+    +     '<div class="card-back card-face">'
+    +      '<img src="back.png">'
+    +    '</div>'
+    +     '<div class="card-front card-face">'
+    +       '<img class="card-value" src="pie.png">'
+    +   '</div>'
+    + '</div>'
+    +  '<div class="card">'
+    +     '<div class="card-back card-face">'
+    +       '<img src="back.png">'
+    +   '</div>'
+    +   '<div class="card-front card-face">'
+    +     '<img class="card-value" src="pie.png">'
+    +    '</div>'
+    +  '</div>'
+    +  '<div class="card">'
+    +     '<div class="card-back card-face">'
+    +        '<img src="back.png">'
+    +      '</div>'
+    +   '<div class="card-front card-face">'
+    +     '<img class="card-value" src="roll.png">'
+    +   '</div>'
+    +  '</div>'
+    +  '<div class="card">'
+    +  '<div class="card-back card-face">'
+    +    '<img src="back.png">'
+    +  '</div>'
+    +  '<div class="card-front card-face">'
+    +     '<img class="card-value" src="roll.png">'
+    +   '</div>'
+    + '</div>'
+    +  '<div class="card">'
+    +     '<div class="card-back card-face">'
+    +      '<img src="back.png">'
+    +   '</div>'
+    +    '<div class="card-front card-face">'
+    +      '<img class="card-value" src="waffle.png">'
+    +   '</div>'
+    +  '</div>'
+    +  '<div class="card">'
+    +   '<div class="card-back card-face">'
+    +     '<img src="back.png">'
+    +   '</div>'
+    +    '<div class="card-front card-face">'
+    +      '<img class="card-value" src="waffle.png">'
+    +     '</div>'
+    + '</div>'
+    + '</div>'
+
+    +  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="bakeryMusic.play();"></div>'
+    +  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="bakeryMusic.pause();"></div>'
+      
+
+);
+
+document.body.appendChild(bakeryScript);
+}
+
+////End Bakery Game///////////////////////////////
+</script>
+
+
+
+
+
+
+
+<script>
+    //Burger Scene 1 Start//////////////////////////////////////////////////
+    function drawBurger1(){
+
+        
+    writeToId("burgerScene1",
+
+    '<link rel="stylesheet" href="home_screen.css">'
+    + '<div id="pause"></div>'
+
+    + '<div id="skip"><img src="skip.gif" onload="setTimeout(runDialog(burgerDialogue, &apos;burgerScene1&apos;, drawBurgerGame, &apos;bob_content.png&apos;), 3000)" onclick="clearId(&apos;burgerScene1&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawBurgerGame(); restartDialogue();"></div>'
+    + '<div onclick="runDialog(burgerDialogue, &apos;burgerScene1&apos;, drawBurgerGame, &apos;bob_content.png&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
+    + '<div id="scene">'
+
+    +    '<img src ="burger_scene.png" style="height:100%;" onload="sceneMusic.play()">'
+    +'</div>'
+    
+    +  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
+    +  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+    );
+    }
+//burger Scene 1 End//////////////////////////////////////////////////////
+
+
+
+
+//Burger Scene 2 Start//////////////////////////////////////////////////
+function drawBurger2(){
+
+writeToId("burgerScene2",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(runDialog2(burgerDialogue2, &apos;burgerScene2&apos;, &apos;bob_content.png&apos;), 3000)" onclick="clearId(&apos;burgerScene2&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawMap(); restartDialogue(); mapMusic.play()"></div>'
++ '<div onclick="runDialog2(burgerDialogue2, &apos;burgerScene2&apos;, &apos;bob_content.png&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="burger_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+//burger Scene 2 End//////////////////////////////////////////////////////
+
+
+
+//Burger Scene 3 Visited Start//////////////////////////////////////////////////
+function drawBurger3(){
+
+writeToId("burgerScene3",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(visitedDialogue(alreadyVisited, &apos;burgerScene3&apos;), 3000)" onclick="clearId(&apos;burgerScene3&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawMap(); restartDialogue(); mapMusic.play()"></div>'
++ '<div onclick="visitedDialogue(alreadyVisited, &apos;burgerScene3&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="burger_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+//burger Scene Visited End//////////////////////////////////////////////////////
+
+
+// function whichBurgerScene(){
+//      if(burgerVisited == 0){
+//         drawBurger1();
+//      } else {
+//         drawBurger3();
+//      }
+//  }    
+
+ function whichBurgerScene(){
+     if(houseVisited == 0){
+        drawGoHome(); 
+     } 
+     else if (houseVisited == 1 && burgerVisited == 0){
+     drawBurger1();    
+     }else {
+        drawBurger3();
+     }
+ }   
+
+
+
+/////Burger Game Start///////////////////////////////////////////////////////
+
+var burgerScript   = document.createElement("script");
+burgerScript.type  = "text/javascript";
+burgerScript.src   = "burger.js";
+
+
+
+function drawBurgerGame(){
+    
+    writeToId("burgerGame",
+    
+    '<div id="pause"></div>'
+    
+    + '<link rel="stylesheet" href="burger.css" />'
+    + 
+    + '<div id="wrapper">'
+    +        '<h1>Help Assemble the Puzzle!</h1>'
+    +        '<p>'
+                
+    +        '</p>'
+     
+    
+    +        '<span id="win"></span>'
+    
+    +        '<select id="characters" name="characters" title="Backgrounds" onchange="changeBackground()">'
+    +            '<option value="burger"       id="burger">Burger</option>'
+    +           ' <option value="fries"       id="fries">Fries</option>'
+    +            '<option value="milkshake"      id="milkshake">Milkshake</option>'
+    +            '<option value="club"      id="club">Club</option>'
+    +        '</select>'
+    
+    +        '<div id="main">'
+    +            '<div id="one"      class="tile">1</div>'
+    +            '<div id="two"      class="tile">2</div>'
+    +            '<div id="three"    class="tile">3</div>'
+    +            '<div id="four"     class="tile">4</div>'
+    +            '<div id="five"     class="tile">5</div>'
+    +            '<div id="six"      class="tile">6</div>'
+    +            '<div id="seven"    class="tile">7</div>'
+    +            '<div id="eight"    class="tile">8</div>'
+    +            '<div id="nine"     class="tile">9</div>'
+    +            '<div id="ten"      class="tile">10</div>'
+    +            '<div id="eleven"   class="tile">11</div>'
+    +            '<div id="twelve"   class="tile">12</div>'
+    +            '<div id="thirteen" class="tile">13</div>'
+    +            '<div id="fourteen" class="tile">14</div>'
+    +            '<div id="fifteen"  class="tile">15</div>'
+    +          '  <div id="sixteen"  class="tile"></div>'
+    +        '</div>'
+    
+    +        '<button onclick="shuffleBoard()">Shuffle</button>'
+    +    '</div>'
+    
+    +  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="burgerMusic.play();" onload="initializeGame();"></div>'
+    +  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="burgerMusic.pause();"></div>'
+    +  '<div id="skipGame"><img src="skip.gif" onload="burgerMusic.play(); " onclick="clearId(&apos;burgerGame&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); sceneMusic.play(); stopMusic(burgerMusic); drawBurger2(); restartDialogue(); burgerVisited++; gamesCompleted++"></div>'
+    
+    );
+    
+    }
+    document.body.appendChild(burgerScript); 
+
+    ///////Burger Game End//////////////////////////////////////////////////////////
+</script>
+
+
+
+
+
+
+<script>
+ //House Scene Start//////////////////////////////////////////////////
+ function drawHouse1(){
+
+        
+writeToId("house1",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(runDialog(houseDialogue, &apos;house1&apos;, drawHouseGame, &apos;bro_content.png&apos;), 3000)" onclick="clearId(&apos;house1&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawHouseGame(); restartDialogue(); houseMusic.play()"></div>'
++ '<div onclick="runDialog(houseDialogue, &apos;house1&apos;, drawHouseGame, &apos;bro_content.png&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="house_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+
+
+
+//House Scene End//////////////////////////////////////////////////////
+
+
+
+//House Scene 2 Start//////////////////////////////////////////////////
+function drawHouse2(){
+
+writeToId("house2",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(runDialog2(houseDialogue2, &apos;house2&apos;, &apos;bro_content.png&apos;), 3000)" onclick="clearId(&apos;house2&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawMap(); restartDialogue(); mapMusic.play();"></div>'
++ '<div onclick="runDialog2(houseDialogue2, &apos;house2&apos;, &apos;bro_content.png&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="house_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+//House Scene 2 End//////////////////////////////////////////////////////
+
+
+//House Scene 3 Visited Start//////////////////////////////////////////////////
+function drawHouse3(){
+
+writeToId("house3",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(visitedDialogue(alreadyVisited, &apos;house3&apos;), 3000)" onclick="clearId(&apos;house3&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawMap(); restartDialogue();"></div>'
++ '<div onclick="visitedDialogue(alreadyVisited, &apos;house3&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="house_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+//house Scene 3 Visited End//////////////////////////////////////////////////////
+
+
+
+//House Game Start//////////////////////////////////////////////////
+
+ var houseScript   = document.createElement("script");
+ houseScript.type  = "text/javascript";
+ houseScript.src   = "houseScript.js";
+
+ var houseScript2   = document.createElement("script");
+ houseScript2.type  = "text/javascript";
+ houseScript2.src   = "houseWord.js";
+
+ function drawHouseGame(){
+
+ writeToId("houseGame",
+
+ '<div id="pause"></div>'
+ + '<link href="https://fonts.googleapis.com/css?family=Rancho&effect=shadow-multiple" rel="stylesheet">'
+ + '<link rel="stylesheet" href="houseStyle.css">'
+ +  '<div id="skipGame"><img src="skip.gif" onclick="clearId(&apos;houseGame&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); sceneMusic.play(); stopMusic(houseMusic); drawHouse2(); restartDialogue(); houseVisited++; gamesCompleted++"></div>'
+ +    '<div id="houseGameScore"></div>'
+ + '<div class="container">'
+
++ '<div class="header">'
++ '<h1>Mystery Word</h1>'
++ '</div>'
+
++ '<div class="letters">'
+ + '<div class="letter">'
+ +   '<div></div>'
+ +   '<div></div>'
+  + '</div>'
+  + '<div class="letter">'
+  +  '<div>R</div>'
+   + '<div></div>'
+  + '</div>'
+  + '<div class="letter">'
+   + '<div></div>'
+    + '<div></div>'
+  + '</div>'
+  + '<div class="letter">'
+    + '<div></div>'
+    + '<div></div>'
+  + '</div>'
+  + '<div class="letter">'
+    + '<div></div>'
+    + '<div></div>'
+  + '</div>'
+  + '<div class="letter">'
+    + '<div>I</div>'
+    + '<div></div>'
+  + '</div>'
+  + '<div class="letter">'
+   + '<div></div>'
+   + '<div></div>'
+  + '</div>'
+  + '<div class="letter">'
+   + '<div></div>'
+    + '<div></div>'
+  + '</div>'
++ '</div>'
+
++'<div class="worddefinition">'
++  "<p>a <i class='type'></i></p>"
++  "<p>definition: <i class='definition'></i></p>"
++  "<p>synonyms: <i class='synonyms'></i></p>"
++'</div>'
+
++'<div class="bottom">'
++  '<div class="keys">'
++    '<div class="keysPlacer">'
++    '</div>'
++  '</div>'
+
++  '<div class="score">'
+
++    "<div class='stats'>"
++      '<div>'
++       ' <span>Score</span>'
++        "<p class='scores'>0</p>"
++      '</div>'
++      '<div>'
++        '<span>Chances</span>'
++        "<p class='chances'>10</p>"
++      '</div>'
++    '</div>'
++    "<div class='hs'>"
++      '<span>Highscore</span>'
++      "<p class='highscore'>0</p>"
++    '</div>'
++   '</div>'
+
++ '</div>'
+
++ '</div>'
+
++ '<div style="left: 500px">Score 15 Points to Win!</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="houseMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="houseMusic.pause();"></div>'
+
+ );
+
+ document.body.appendChild(houseScript2);
+ document.body.appendChild(houseScript);
+ 
+}
+// house Game End//////////////////////////////////////////////////////
+
+
+
+//House Game Start//////////////////////////////////////////////////
+
+// var houseScript   = document.createElement("script");
+// houseScript.type  = "text/javascript";
+// houseScript.src   = "house_script.js";
+
+// function drawHouseGame(){
+
+// writeToId("houseGame",
+
+// '<div id="pause"></div>'
+// +  '<div id="skipGame"><img src="skip.gif" onclick="clearId(&apos;houseGame&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); sceneMusic.play(); stopMusic(houseMusic); drawHouse2(); restartDialogue(); houseVisited++; gamesCompleted++"></div>'
+// +'<style>'
+// + 'body{'
+// + 'background-color:lightyellow;'
+// +  'background-size: 100%;'
+// +  'position: absolute;'
+// +  'top: 50%;'
+// +  'left: 50%;'
+// +  'transform: translateX(-50%), translateY(-50%);'
+// +  'text-align: center;'
+// +  '}'
+// +  '</style>'
+
+    
+
+// +        '<div id="chooseDifficulty" style="display: block">'
+
+// +            '<h1>Guess a Word</h1>'
+// +            '<h5>Choose a difficulty</h5>'
+// +            '<button title="very easy" onclick="chooseDif1()">easy</button>'
+// +            '<button title="not difficult" onclick="chooseDif2()">normal</button>'
+// +            '<button title="a challenge" onclick="chooseDif3()">hard</button>'
+
+// +        '</div>'
+
+// +        '<!--not active yet :(-->'
+// +        '<!--<div id="chooseTheme" style="display: none">'
+
+// +            '<h1>Guess a Word</h1>'
+// +            '<h5>Choose a Theme</h5>'
+// +            '<button onclick="chooseTheme1()">random</button>'
+// +            '<button onclick="chooseTheme2()">2</button>'
+// +            '<button onclick="chooseTheme3()">3</button>'
+
+// +       '</div>-->'
+
+// +        '<div id="startButton" style="display: none">'
+
+// +            '<h1>Guess a Word</h1>'
+// +            '<button onclick="start()">Start</button>'
+// +            '<p>Note: Some words may contain a hyphen(-) ex: X-ray</p>'
+
+// +        '</div>'
+
+// +        '<div id="mainGame" style="display: none">'
+
+// +        '<p id="question"></p>'
+
+// +        '<input type="text" id="guess" maxlength="1">'
+
+// +        '<div>'
+// +            '<button onclick="enterGuess()">Enter Guess</button>'
+// +        '</div>'
+
+// +        '</div>'
+
+// +        '<div id="RRguess" style="display: block">'
+
+// +        '<p id="rightGuess"></p>'
+// +        '<p id ="wrongGuess"></p>'
+// +        '<p id ="guessesLeft"></p>'
+
+// +        '</div>'
+
+// +        '<div id="youLose" style="display: none">'
+
+// +            '<h1>You Lose</h1>'
+
+// +           ' <div>'
+// +                '<button onclick="restart()">Play again?</button>'
+// +            '</div>'
+
+// +            '<p id="correctWordWas"></p>'
+
+// +        '</div>'
+
+// +        '<div id="youWin" style="display: none">'
+
+// +            '<h2>You Win</h2>'
+
+// +            '<div>'
+// +                '<button onclick="houseRedirect()">Continue Story</button>'
+// +            '</div>'
+
+// +        '</div>'
+
+// );
+// document.body.appendChild(houseScript);
+// }
+// //house Game End//////////////////////////////////////////////////////
+
+
+
+function whichHouseScene(){
+     if(houseVisited == 0){
+        drawHouse1();
+     } else {
+        drawHouse3();
+     }
+ }    
+
+ 
+</script>
+
+
+
+
+ <script>
+//Carn Scene 1 Start//////////////////////////////////////////////////
+
+
+function drawCarn1(){
+        
+writeToId("carn1",
+'<link rel="stylesheet" href="home_screen.css">'
+
++'<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(runDialog(carnDialogue, &apos;carn1&apos;, drawWhack, &apos;charlie.png&apos;), 3000, )" onclick="clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); clearId(&apos;carn1&apos;); clearId(&apos;dialogue&apos;); stopMusic(sceneMusic); drawWhack();"></div>'
++ '<div onclick="runDialog(carnDialogue, &apos;carn1&apos;, drawWhack, &apos;charlie.png&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="carn_scene.png" style="height:100%;" onload=" sceneMusic.play();">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+
+
+
+
+);
+}
+//Carn Scene 1 End//////////////////////////////////////////////////////
+
+
+
+//Carn Scene 2 Start//////////////////////////////////////////////////
+function drawCarn2(){
+
+writeToId("carn2",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="restartDialogue(); setTimeout(runDialog2(carnDialogue2, &apos;carn2&apos;, &apos;charlie.png&apos;), 3000)" onclick="clearId(&apos;carn2&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawMap(); restartDialogue(); mapMusic.play();"></div>'
++ '<div onclick="runDialog2(carnDialogue2, &apos;carn2&apos;, &apos;charlie.png&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="carn_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+//Carn Scene 2 End//////////////////////////////////////////////////////
+
+
+//Carn Scene 3 Visited Start//////////////////////////////////////////////////
+function drawCarn3(){
+
+writeToId("carn3",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(visitedDialogue(alreadyVisited, &apos;carn3&apos;), 3000)" onclick="clearId(&apos;carn3&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawMap(); mapMusic.play(); restartDialogue();"></div>'
++ '<div onclick="visitedDialogue(alreadyVisited, &apos;carn3&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="carn_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+//Carn Scene 3 Visited End//////////////////////////////////////////////////////
+
+// function whichCarnScene(){
+//         if(carnVisited == 0){
+//             drawCarn1();
+//         } else {
+//             drawCarn3();
+//         }
+//     } 
+
+    function whichCarnScene(){
+     if(houseVisited == 0){
+        drawGoHome(); 
+     } 
+     else if (houseVisited == 1 && carnVisited == 0){
+     drawCarn1();    
+     }else {
+        drawCarn3();
+     }
+ }   
+
+
+
+
+//whack a mole Start//////////////////////////////////////////////////.//////////////////////
+var carnScript   = document.createElement("script");
+carnScript.type  = "text/javascript";
+carnScript.src   = "whackJava.js";
+ 
+
+//+ "<button onclick='console.log(\" butter \")'>Start!</button>"
+function drawWhack(){
+
+writeToId("whack", 
+
+'<div id="pause"></div>'
+ 
++ '<link rel="stylesheet" href="whackStyle.css">'
++ "<link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>"
+
+ 
++'<h1>Whack-a-mole!</h1>'
+
++'<h1 class="score"> 0</h1>'
+
++'<div class = "start">'
++'<button onClick="startGame(); startGame();">Start!</button>'
++'</div>'
+
++'<div class="game">'
++'<div id="whackWin" style="position:absolute; z-index: 200;"></div>'
+
++'<div class="hole hole1">'
++'<div class="mole"></div>'
++'</div>'
+
++'<div class="hole hole2">'
++'<div class="mole"></div>'
++'</div>'
+
++'<div class="hole hole3">'
++'<div class="mole"></div>'
++'</div>'
+
++'<div class="hole hole4">'
++'<div class="mole"></div>'
++'</div>'
+
++'<div class="hole hole5">'
++'<div class="mole"></div>'
++'</div>'
+
++'<div class="hole hole6">'
++'<div class="mole"></div>'
++'</div>'
+
++'<div class="hole hole7">'
++'<div class="mole"></div>'
++'</div>'
+
++'<div class="hole hole8">'
++'<div class="mole"></div>'
++'</div>'
+
++'<div class="hole hole9">'
++'<div class="mole"></div>'
++'</div>'
+
++'</div>'
+
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="carnMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="carnMusic.pause();"></div>'
+
++  '<div id="skipGame"><img src="skip.gif" onload="carnMusic.play()" onclick="clearId(&apos;whack&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); sceneMusic.play(); stopMusic(carnMusic); drawCarn2(); restartDialogue(); carnVisited++; gamesCompleted++"></div>'
+);
+document.body.appendChild(carnScript);
+}
+
+//whack End//////////////////////////////////////////////////////
+</script>
+
+
+
+
+
+<script>
+    //Play Scene Start//////////////////////////////////////////////////
+ function drawPlay1(){
+
+        
+writeToId("play1",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(runDialog(playDialogue, &apos;play1&apos;, drawPlayGame, &apos;&apos;), 3000)" onclick="clearId(&apos;play1&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawPlayGame(); restartDialogue();"></div>'
++ '<div onclick="runDialog(playDialogue, &apos;play1&apos;, drawPlayGame, &apos;&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="play_scene.png" style="height:100%;" onload="sceneMusic.play()">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+
+
+
+//Play 1 Scene End//////////////////////////////////////////////////////
+
+
+
+//Play Scene 2 Start//////////////////////////////////////////////////
+function drawPlay2(){
+
+writeToId("play2",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(runDialog2(playDialogue2, &apos;play2&apos;, &apos;&apos;), 3000)" onclick="clearId(&apos;play2&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawGameComplete(); restartDialogue();"></div>'
++ '<div onclick="runDialogBonus(playDialogue2, &apos;play2&apos;, drawGameComplete)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="play_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+//Play Scene 2 End//////////////////////////////////////////////////////
+
+
+//Play Scene 3 Visited Start//////////////////////////////////////////////////
+function drawPlay3(){
+
+writeToId("play3",
+
+'<link rel="stylesheet" href="home_screen.css">'
++ '<div id="pause"></div>'
+
++ '<div id="skip"><img src="skip.gif" onload="setTimeout(visitedDialogue(alreadyVisited, &apos;play3&apos;), 3000)" onclick="clearId(&apos;play3&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); stopMusic(sceneMusic); drawMap(); restartDialogue();"></div>'
++ '<div onclick="visitedDialogue(alreadyVisited, &apos;play3&apos;)" style="z-index: 1; position:absolute; top:430px; left:20px; width: 955px; height:175px"><img src="text_box.png"></div>' 
++ '<div id="scene">'
+
++    '<img src ="play_scene.png" style="height:100%;">'
++'</div>'
+
++  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="sceneMusic.play();"></div>'
++  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="sceneMusic.pause();"></div>'
+
+);
+}
+//Play Scene 3 Visited End//////////////////////////////////////////////////////
+
+
+// function whichPlayScene(){
+//      if(playVisited == 0){
+//         drawPlay1();
+//      } else {
+//         drawPlay3();
+//      }
+//  }   
+
+ function whichPlayScene(){
+     if(playVisited == 0 && gamesCompleted < 4){
+        dontPlay(); 
+     } 
+     else if (playVisited == 0 && gamesCompleted == 4){
+     drawPlay1();    
+     }else {
+        drawPlay3();
+     }
+ }   
+
+ 
+
+ ////Playground Game Start//////////////////////////////////////////////////////////////////////////
+
+var playScript   = document.createElement("script");
+    playScript.type  = "text/javascript";
+    playScript.src   = "play.js";
+
+   
+ function drawPlayGame(){
+ writeToId("playGame",
+
+ '<h1 id="heading">Find Cannoli in the below map by clicking and following the clues!</h1>'
+
+ 
+	+ '<img id="map" width="600" height="400" src="map_cannoli.png">'
+	
+	+ '<p id="distance"></p>'
+	
+	
+	+ '<link rel="stylesheet" href="soccer.css" />'
+
+    + '<div id="skipGame"><img src="skip.gif" onload="playMusic.play()" onclick="clearId(&apos;playGame&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;characterSprite&apos;); clearId(&apos;asra&apos;); sceneMusic.play(); stopMusic(playMusic); drawPlay2(); restartDialogue(); playVisited++; gamesCompleted++"></div>'
+
+    +  '<div class ="music" style="left: 900px;"><img src="play_music.png" onclick="playMusic.play();"></div>'
+    +  '<div class ="music" style="left: 950px;"><img src="pause_music.png" onclick="playMusic.pause();"></div>'
+    );
+    document.body.appendChild(playScript);
+};
+
+    /////////////////////////////////////////////////////////
+    
+  
+//playground game end///////////////////////////////////////////////////////////////  
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+///Pause Menu Start/////////////////////////////////////////////////////    
+var menuOpen = new Audio("menu.mp3");
+var menuClose = new Audio("menu_back.mp3");
+
+
+var hoverSound = new Audio("link_hover.mp3");
+//from https://www.youtube.com/watch?v=OClCzFJUVqM
+
+var count = 0;
+
+//if count is odd, populate menu
+//if count is even, erase menu
+ 
+
+
+
+//when esc is pressed
+document.addEventListener('keydown', function (event) {
+    if (event.key === "Escape") {
+        if (count % 2 == 0) {
+            menuOpen.play();
+            count++;
+
+            //writes text on the pause menu
+            document.getElementById("pause").innerHTML =
+            '<link rel="stylesheet" href="home_screen.css">'
+ 
+            + '<div style="position:absolute; left: 350px;"><img src ="menu.png"></div>' 
+
+            + "<div style='font-family: cursive; position:absolute;  top: 0px; left: 380px; font-size:80px;'>" 
+            + "Menu" 
+            + "</div>" 
+
+            + '<div style="position:absolute; width:150px; top: 200px; left: 395px; font-size:20px;"' 
+
+            + 'onclick="clearId(&apos;carn1&apos;); clearId(&apos;carn2&apos;); clearId(&apos;carn3&apos;); clearId(&apos;whack&apos;); stopMusic(carnMusic); ' 
+            + 'clearId(&apos;burgerScene1&apos;); clearId(&apos;burgerScene2&apos;); clearId(&apos;burgerScene3&apos;); clearId(&apos;burgerGame&apos;); stopMusic(burgerMusic); '
+            + 'clearId(&apos;bakery1&apos;); clearId(&apos;bakery2&apos;); clearId(&apos;bakery3&apos;); clearId(&apos;bakeryGame&apos;); stopMusic(bakeryMusic); '
+            + 'clearId(&apos;play1&apos;); clearId(&apos;play2&apos;); clearId(&apos;play3&apos;); clearId(&apos;playGame&apos;); stopMusic(playMusic); '
+            + 'clearId(&apos;house1&apos;); clearId(&apos;house2&apos;); clearId(&apos;house3&apos;); clearId(&apos;houseGame&apos;); stopMusic(houseMusic); '
+            + 'clearId(&apos;noNeed&apos;); clearId(&apos;goHomeDialogue&apos;); stopMusic(pergatoryMusic); '
+            + 'clearId(&apos;characterSprite&apos;); clearId(&apos;dialogue&apos;); clearId(&apos;textBox&apos;); clearId(&apos;asra&apos;); ' 
+            + 'closeMenu(); drawMap(); stopMusic(startMusic); stopMusic(mapMusic);  stopMusic(sceneMusic); mapMusic.play(); restartDialogue(); ">' 
+
+            + '<a href="#" onMouseOver="hoverSound.play()">Back to Map</a>' 
+            + '</div>' 
+
+       
+
+            + "<div style='position:absolute; width:150px; top: 250px; left: 400px; font-size:20px;'>" 
+            + "<a href ='#' onMouseOver='hoverSound.play()' onclick='closeWindow()'>Exit Game</a>" 
+            + "</div>";
+             
+        } else {
+            closeMenu();
+
+        }
+    }
+});
+
+function closeWindow() {
+    window.close();
+  }
+
+  
+function closeMenu(){
+  menuClose.play();
+  count++;
+  //erases the text on the pause menu
+  document.getElementById("pause").innerHTML = " ";
+   
+};
+//Pause Menu End////////////////////////////////////////////////////////////////
+
+
+</script>
+
+
+
+
+
+
+
+
+<!-- dialogue stuff start here -->
+
+<script>
+
+
+var dialogueIndex = 0;
+
+var bakeryDialogue = ["Bebe: 'Ello Asra! Top o' the mornin' to ya!", "Asra: Hello Mrs. Bebe! Have you seen my kitty Cannoli?", 
+                        "Bebe: Oi. That blimey cat was tearin' up me garbage!", "Asra: I'm so sorry about that. I'll cleant it!",
+                        "Bebe: Hmm...", "Bebe: I'll clean it up.", "Bebe: While I do that, you spiffy up my display case, eh?",
+                        "Asra: Sure! I can do that!"];
+var bakeryDialogue2 = ["Bebe: The case looks beautiful!", "Asra: Thanks! It was hard.", "Bebe: Sorry to say, ", 
+                        "Bebe: That cat skedaddled as soon as I set me feet outside.", "Asra: Darn! Did you see where he was going?",
+                        "Bebe: Oi. He headed down to the canival that's in town.", "Asra: Thank you! I'll go get him.", "Bebe: Good luck, lass!"];
+
+var burgerDialogue = ["Asra: Hello, Mr. Bob!", "Big Bob: Hello, there little Asra.", "Asra: Have you seen my cat Cannoli anywhere?",
+                      "Big Bob: Sorry little Asra...", "Big Bob: I can't talk right now!", "Big Bob: I have been swamped with customers all day.",
+                       "Asra: Can I help with something?", "Big Bob: YES!! THANK THE HEAVENS!!", "Big Bob: Uh... I mean...", "Big Bob: Yes. I would appreciate it",
+                        "Big Bob: Please put together at least one food or drink.", "Big Bob: I appreciate you little Asra!"];
+var burgerDialogue2 = ["Big Bob: Thank you little Asra.", "Asra: You're very welcome Mr. Bob.", "Big Bob: Now about your little kitty...",
+                        "Big Bob: I believe I saw the scamp in the garbage near...", "Big Bob: Umm...", "Big Bob: Not sure little Asra.", 
+                        "Asra: Aww...", "Big Bob: Keep looking...", 
+                        "Big Bob: I am sure he is in town somewhere little one.", "Asra: Thank you, I'll keep looking."];
+
+var carnDialogue = ["Asra: Cannoli has got to be here somewhere...", "Charlie: Boing Boing! How's it going?", "Asra: Wow! A real clown!", 
+                    "Charlie: Yep! It's me! Charlie the Carny!", "Asra: Have you seen a cat around here anywhere?",
+                    "Charlie: I could tell you about the lost soul...", "Charlie: But first, you must try whack-a-mole!",
+                    "Asra: Can't you just tell me yes or no?", "Charlie: No way, Jose'.", "Asra: Fine! After I play you'll tell me!"];
+var carnDialogue2 = ["Charlie: Good job! You're movements were so very stark.", "Charlie: I saw your cat going to the park!", 
+                    "Asra: Sheesh. Thanks."];
+
+var houseDialogue = ["Asra: Hey, Asro! Have you seen Cannoli?", "Asro: Nope. Not since yesterday. Stupid cat.", 
+                    "Asra: Cannoli isn't stupid. YOU'RE stupid.", "Asro: Oh, yeah?", 
+                    "Asro: If I'm stupid, how come I remembered to brush my teeth?",
+                    "Asro: You're breath smells like Cannoli.",
+                    "Asra: ...", "Asra: After I brush my teeth we will talk more!"];
+
+var houseDialogue2 = ["Asra: All minty fresh!", "Asro: Finally, cat breath!", "Asra: Whatever! Where did you see Cannoli last?",
+                      "Asro: Last time I saw him was at Bebe's breads.", "Asra: I'll go there then. Thanks, dummy!",
+                      "Asro: Whatever, loser!"];
+
+var playDialogue = ["Asra: All of the clues lead me here.", "Asra: I guess I'll have to search here.", "Lets do it!"];
+var playDialogue2 = ["Cannoli: Meow.", "Asra: I found you! You fluff ball.", "Asra: I'll never lose you again!", "Cannoli:Meooooow!"];
+
+var alreadyVisited = ["Asra has already visted this place.", "Going back to Map..."];
+
+var goHomeDialogue = ["Asra: I should probably start looking for Cannoli at home.", "Asra: Let's start there!"];
+var noNeedDialogue = ["Asra: I have no reason to check here yet...", "I should check other places first!"];
+
+var gameDone = ["You have found Cannoli!", "Thank you so much for playing our game!", "Much love from Ashlynne, Atai, & Brianna...",
+                " ", " ", " ", "That's it. That's the game.", "There's no more.", "Okay!", "Good bye!",
+                "Bye!", "See ya!", "Tata!", "Toodle loo!", "Sayonara!", "Adios!", " ", " ", " ", " ", "Still here, huh.", "We will close the game for you.",
+                "Good bye for real this time!", " "];
+
+
+var charIndex = 0;
+var textSpeed = 20;
+
+
+ 
+function restartDialogue(){
+    dialogueIndex = 0;
+    charIndex = 0;
+}
+    
+function gameOverDialogue(dialogue, ID){
+    
+    if(dialogueIndex < dialogue.length - 1){
+                 
+                 function typeWriter() {
+             if (charIndex < dialogue[dialogueIndex].length) { 
+                 document.getElementById("dialogue").innerHTML += dialogue[dialogueIndex].charAt(charIndex);
+                 charIndex++;
+                 setTimeout(typeWriter, textSpeed);
+                 textSound.play();
+             }    
+         }
+         typeWriter();
+         
+         if(charIndex == dialogue[dialogueIndex].length){
+             document.getElementById("dialogue").innerHTML = " ";
+             dialogueIndex++;
+             charIndex = 0;   
+             typeWriter();
+             console.log("Dialogue Index: " + dialogueIndex + " Dialogue Length: " + dialogue.length)
+         }
+          if(dialogueIndex >= dialogue.length - 1){
+            window.close();
+
+         }
+         
+     } 
+}
+
+function pergatoryDialogue(dialogue, ID){
+    if(dialogueIndex < dialogue.length - 1){
+                 
+                 function typeWriter() {
+             if (charIndex < dialogue[dialogueIndex].length) { 
+                 document.getElementById("dialogue").innerHTML += dialogue[dialogueIndex].charAt(charIndex);
+                 charIndex++;
+                 setTimeout(typeWriter, textSpeed);
+                 textSound.play();
+             }    
+         }
+         typeWriter();
+         document.getElementById("asra").innerHTML = '<img src="asra_content.png">';
+         
+         if(charIndex == dialogue[dialogueIndex].length){
+             document.getElementById("dialogue").innerHTML = " ";
+             dialogueIndex++;
+             charIndex = 0;   
+             typeWriter();
+         }
+     } else {
+         document.getElementById("dialogue").innerHTML = " ";
+         clearId(ID); 
+         stopMusic(pergatoryMusic); 
+         restartDialogue();
+         clearId("asra");
+         clearId("characterSprite");
+         drawMap();
+         mapMusic.play();
+     }
+}
+
+
+function runDialog(dialogue, ID, game, character){ 
+    if(dialogueIndex < dialogue.length - 1){
+                 
+                function typeWriter() {
+            if (charIndex < dialogue[dialogueIndex].length) {
+                
+                document.getElementById("dialogue").innerHTML += dialogue[dialogueIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, textSpeed);
+                textSound.play();
+            }    
+        }
+        typeWriter();
+        document.getElementById("asra").innerHTML = '<img src="asra_content.png">';
+                document.getElementById("characterSprite").innerHTML = "<img src=" + character + ">"; 
+        
+        if(charIndex == dialogue[dialogueIndex].length){
+            document.getElementById("dialogue").innerHTML = " ";
+            dialogueIndex++;
+            charIndex = 0;   
+            typeWriter();
+        }
+    } else {
+        document.getElementById("dialogue").innerHTML = " ";
+        clearId(ID); 
+        stopMusic(sceneMusic); 
+        game();
+        dialogueIndex = 0;
+        charIndex = 0;
+        clearId("asra");
+        clearId("characterSprite");
+    }
+}
+
+
+function runDialog2(dialogue, ID, character){ 
+    if(dialogueIndex < dialogue.length - 1){
+                 
+                function typeWriter() {
+            if (charIndex < dialogue[dialogueIndex].length) {
+                
+                document.getElementById("dialogue").innerHTML += dialogue[dialogueIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, textSpeed);
+                textSound.play();
+            }    
+        }
+        typeWriter();
+        document.getElementById("asra").innerHTML = '<img src="asra_content.png">';
+                document.getElementById("characterSprite").innerHTML = "<img src=" + character + ">"; 
+        
+        if(charIndex == dialogue[dialogueIndex].length){
+            document.getElementById("dialogue").innerHTML = " ";
+            dialogueIndex++;
+            charIndex = 0;   
+            typeWriter();
+        }
+    } else {
+        document.getElementById("dialogue").innerHTML = " ";
+        clearId(ID); 
+        stopMusic(sceneMusic); 
+        dialogueIndex = 0;
+        charIndex = 0;
+        clearId("asra");
+        clearId("characterSprite");
+        drawMap();
+        mapMusic.play();
+        stopMusic(sceneMusic);
+        console.log(gamesCompleted)
+    }
+}
+
+
+function runDialogBonus(dialogue, ID){
+    if(dialogueIndex < dialogue.length - 1){
+                 
+                 function typeWriter() {
+             if (charIndex < dialogue[dialogueIndex].length) { 
+                 document.getElementById("dialogue").innerHTML += dialogue[dialogueIndex].charAt(charIndex);
+                 charIndex++;
+                 setTimeout(typeWriter, textSpeed);
+                 textSound.play();
+             }    
+         }
+         typeWriter();
+         document.getElementById("asra").innerHTML = '<img src="asra_content.png">';
+         
+         if(charIndex == dialogue[dialogueIndex].length){
+             document.getElementById("dialogue").innerHTML = " ";
+             dialogueIndex++;
+             charIndex = 0;   
+             typeWriter();
+         }
+     } else {
+         restartDialogue();
+        drawGameComplete();
+        stopMusic(sceneMusic);
+        clearId('asra');
+     }
+}
+
+function visitedDialogue(dialogue, ID){ 
+    if(dialogueIndex < dialogue.length - 1){
+                 
+                function typeWriter() {
+            if (charIndex < dialogue[dialogueIndex].length) {
+                
+                document.getElementById("dialogue").innerHTML += dialogue[dialogueIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, textSpeed);
+                textSound.play();
+            }    
+        }
+        typeWriter();
+        
+        
+        if(charIndex == dialogue[dialogueIndex].length){
+            document.getElementById("dialogue").innerHTML = " ";
+            dialogueIndex++;
+            charIndex = 0;   
+            typeWriter();
+        }
+    } else {
+        document.getElementById("dialogue").innerHTML = " ";
+        clearId(ID); 
+        stopMusic(sceneMusic); 
+        dialogueIndex = 0;
+        charIndex = 0;
+        clearId("asra");
+        clearId("characterSprite");
+        drawMap();
+        mapMusic.play();
+        stopMusic(sceneMusic);
+        console.log(gamesCompleted)
+    }
+}
+
+
+
+// function runDialog(dialogue, ID){
+    
+//     if(dialogueIndex < dialogue.length){    
+//         document.getElementById("dialogue").innerHTML = dialogue[dialogueIndex];
+//         dialogueIndex++;
+//     } else {
+//         document.getElementById("dialogue").innerHTML = " ";
+//         clearId(ID); 
+//         stopMusic(sceneMusic); 
+//         drawWhack() ;
+//         dialogueIndex = 0;
+//     }
+// }
+
+</script>
+
+
+<!-- dialogue stuff end here -->
+
+ 
+
+
+<script>
+/////Start game end/////////////////////////////////////////////////////////////
+
+// writeToId("gameComplete",
+//     '<link rel="stylesheet" href="home_screen.css">'
+
+//     + '<img src="bg.gif" style="position:absolute; left:0; width: "><img src="wave.gif" style="position:absolute; left:0;">'
+//         + '<div id ="border" style="font-family: cursive; top:50%; left:60%; margin-top: -50px;margin-left: -100px;" onclick="drawMap(); clearId(&apos;opening&apos;); stopMusic(startMusic); mapMusic.play();">START <br> GAME</div> '
+//         + "<p style='position:absolute; top:0px; width:500px;'> Asra's Adventure <br> </p>" 
+//         + "<p style='position:absolute; top:100px; width: 300px; left:460px;font-size:30px;'> Saving Cannoli </p>");
+
+
+
+//End game end/////////////////////////////////////////////////////////////////
+
+</script>
+
+
+</html>
+
+
+
